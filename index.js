@@ -12,6 +12,7 @@ db.sequelize.sync();
 
 app.use('/',payRoute)
 app.use('/',workloadRoute)
+
 app.get('/',(req,res) =>{
     return res.send({
         data : 1
