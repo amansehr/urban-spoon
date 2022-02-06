@@ -1,6 +1,6 @@
 module.exports.pay = (req,res) =>{
-
+    console.log(req.body);
     return res.send({
-        req
+        r : req.body.r
     })
 }
