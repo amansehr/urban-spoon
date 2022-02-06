@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const payRoute = require('./routes/pay.routes');
 const workloadRoute = require('./routes/workload.routes')
+const insertRoute = require('./routes/user.routes')
 const bodyParser = require('body-parser');
 const db = require('./services/db.services')
 
@@ -12,6 +13,7 @@ db.sequelize.sync();
 
 app.use('/',payRoute)
 app.use('/',workloadRoute)
+app.use('/',insertRoute)
 
 app.get('/',(req,res) =>{
     return res.send({
