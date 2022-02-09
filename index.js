@@ -5,17 +5,19 @@ const workloadRoute = require('./routes/workload.routes')
 const insertRoute = require('./routes/user.routes')
 const bodyParser = require('body-parser');
 const db = require('./services/db.services')
-
+const authRoute = require('./routes/auth.routes')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended : true}));
 
 db.sequelize.sync();
+// db.sequelize.sync({force : true});
 
 app.use('/',payRoute)
 app.use('/',workloadRoute)
 app.use('/',insertRoute)
+app.use('/',authRoute)
 
-app.get('/',(req,res) =>{
+app.get('/',(req,res) =>{   
     return res.send({
         data : 1
     })
