@@ -1,12 +1,11 @@
 const userModel = require("../services/db.services").User
 const generateToken = require("../controller/jwtToken.controller").generateToken
-
+const bcrypt = require('bcrypt')
 
 module.exports.login = (req,res) =>{
     userModel.findOne({
         where : {
             user : req.body.username,
-            password : req.body.password
         }
     }).then(data =>{
         if(data.length == 0){
@@ -14,10 +13,15 @@ module.exports.login = (req,res) =>{
                 msg : "Please SignUp"
             })
         }
-        const token = generateToken(data)
+        if(bcrypt.compareSync(req.body.password,data.password)){
+            const token = generateToken(data)
+            return res.send({
+                token:token,
+                msg: "login Successful",
+            })      
+        }
         return res.send({
-            token:token,
-            msg: "login Successful",
+            msg : "Password Incorrect"
         })
     }).catch(err => {
         console.log("Error in login controller",err)
@@ -35,9 +39,10 @@ module.exports.signUp = (req,res) => {
     }).then(data => {
         console.log(data)
         if(data.length == 0){
+            const hash = bcrypt.hashSync(req.body.password,10);
             userModel.create({ 
                 user:req.body.username,
-                password:req.body.password
+                password:hash
             }).catch(err => console.log("Error in signup controller",err))
 
             return res.send({
