@@ -14,9 +14,8 @@ module.exports.login = (req,res) =>{
             })
         }
         if(bcrypt.compareSync(req.body.password,data.password)){
-            const token = generateToken(data)
+            res = generateToken(data,res)
             return res.send({
-                token:token,
                 msg: "login Successful",
             })      
         }

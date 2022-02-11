@@ -6,11 +6,18 @@ const insertRoute = require('./routes/user.routes')
 const bodyParser = require('body-parser');
 const db = require('./services/db.services')
 const authRoute = require('./routes/auth.routes')
+const morgan = require('morgan')
+const cookieParser = require('cookie-parser')
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended : true}));
+app.use(morgan('tiny'))
+app.use(cookieParser())
 
 db.sequelize.sync();
 // db.sequelize.sync({force : true});
+
+
 
 app.use('/',payRoute)
 app.use('/',workloadRoute)
