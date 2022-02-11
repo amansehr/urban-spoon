@@ -1,16 +1,12 @@
-const res = require('express/lib/response');
 const jwt = require('jsonwebtoken')
 require("dotenv").config();
 
 
 module.exports.generateToken = (data,res) => {
-    const token = jwt.sign({username : data.username},process.env.JWT_SECRET)
-    res.cookie("token",token,{
-        httpOnly : true,
-        maxAge: 864000000,
-        sameSite: "none",    
-    });
-    // res.append('Authorization',`bearer ${token}`)
+    const token = jwt.sign({id : data.id},process.env.JWT_SECRET)
+    res.append('Set-Cookie', `token = ${token}; Path='http://localhost:5555/' HttpOnly`)
 
-    return res;
+    return res.send({
+        msg: "Login Successful",
+    });
 }
