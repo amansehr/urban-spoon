@@ -14,7 +14,8 @@ const loginGoogleSchema = Joi.object().keys({
 
 route.post('/loginByEmailPassword',validate(loginPasswordSchema),authCtrl.loginByEmailPassword);
 route.post('/loginByGoogle',validate(loginGoogleSchema),authCtrl.loginByGoogle);
-
 route.post('/signUpEmailPassword',authCtrl.signUpEmailPassword);
+route.post('/forgetPassword',authCtrl.forgetPassword);
+route.post('/resetPassword',authCtrl.resetPassword);
 
 module.exports = route

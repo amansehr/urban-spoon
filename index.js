@@ -9,6 +9,7 @@ const db = require('./services/db.services')
 const authRoute = require('./routes/auth.routes')
 const morgan = require('morgan')
 const cookieParser = require('cookie-parser')
+require("./services/jobScheduling.service")
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended : true}));
@@ -16,7 +17,7 @@ app.use(morgan('tiny'))
 app.use(cookieParser())
 
 db.sequelize.sync();
-// db.sequelize.sync({force : true});
+//db.sequelize.sync({force : true});
 
 app.set('view engine','ejs')
 
@@ -30,10 +31,10 @@ app.get('/',(req,res) =>{
         data : 1
     })
 })
-
 app.get('/loginByGoogle',(req,res)=>{
     return res.render('login')
 })
+
 app.listen(5555,(req,res) =>{
     console.log("server started at ",5555)
 })
